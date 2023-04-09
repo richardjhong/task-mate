@@ -1,6 +1,6 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
-import { typeDefs, resolvers } from './schemas/index.ts';
+import { typeDefs, resolvers } from '../src/pages/api/schemas/index.ts';
 
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
