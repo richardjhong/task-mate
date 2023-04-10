@@ -1,4 +1,3 @@
-
 import { gql } from 'graphql-tag';
 
 const typeDefs = gql`
@@ -23,25 +22,9 @@ const typeDefs = gql`
     status: TaskStatus
   }
 
-  type Book {
-    title: String
-    author: String
-  }
-  
-  type Example {
-    name: String!
-  }
-
-  type User {
-    firstName: String
-    lastName: String
-  }
-
   type Query {
     tasks(status: TaskStatus): [Task!]!
     task(id: ID!): Task
-    books: [Book]
-    users: [User]
   }
 
   type Mutation {
