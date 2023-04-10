@@ -1,24 +1,19 @@
+import { Resolvers, TaskStatus, Task as TaskType } from '../../generated/graphql-backend';
 import { Task, User } from '../../src/pages/api/models';
 import { Types } from 'mongoose';
+import { Db as MongoDB } from 'mongodb';
 
-enum TaskStatus {
-  active = 'active',
-  completed = 'completed',
-}
+interface ApolloContext {
+  db: MongoDB;
+};
 
-interface Task {
-  id: Types.ObjectId;
-  title: string;
-  status: TaskStatus;
-}
-
-const resolvers = {
+const resolvers: Resolvers<ApolloContext> = {
   Query: {
     tasks: async (
       parent, 
-      args: { status?: TaskStatus }, 
+      args, 
       context
-    ): Promise<Task[]> => {
+    ) => {
       try {
         const tasks = args.status ? await Task.find({ status: args.status }) : await Task.find();
         tasks.forEach(task => task.id = task._id);
@@ -27,39 +22,39 @@ const resolvers = {
         console.error(err);
       };
     },
-    task(parent, args, context) {
+    task: async (parent, args, context) => {
       return null;
     },
-    books: () => [],
-    users: async () => {
+    books: async (parent, args, context) => [],
+    users: async (parent, args, context) => {
       try {
         const users = await User.find({});
         return users;
       } catch (err) {
         console.error(err);
-      }
+      };
     }
   },
   Mutation: {
     createTask: async (
       parent, 
-      args: { input: { title: string } }, 
+      args, 
       context
-    ): Promise<Task> => {
+    ): Promise<TaskType> => {
       try {
         const task = await Task.create({ 
           title: args.input.title, 
-          status: TaskStatus.active 
+          status: TaskStatus.Active 
         });
         return task;
       } catch (err) {
         console.error(err);
       };
     },
-    updateTask(parent, args, context) {
+    updateTask: (parent, args, context) => {
       return null;
     },
-    deleteTask(parent, args, context) {
+    deleteTask: (parent, args, context) => {
       return null;
     },
   },

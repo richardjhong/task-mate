@@ -1,8 +1,8 @@
 import mongoose, { Schema, Types } from 'mongoose';
 
 enum TaskStatus {
-  active = 'active',
-  completed = 'completed',
+  Active = 'active',
+  Completed = 'completed',
 }
 
 interface TaskInterface {
