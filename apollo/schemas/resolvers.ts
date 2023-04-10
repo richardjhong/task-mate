@@ -1,6 +1,5 @@
 import { Resolvers, TaskStatus, Task as TaskType } from '../../generated/graphql-backend';
-import { Task, User } from '../../src/pages/api/models';
-import { Types } from 'mongoose';
+import { Task } from '../../src/pages/api/models';
 import { Db as MongoDB } from 'mongodb';
 
 interface ApolloContext {
@@ -84,7 +83,6 @@ const resolvers: Resolvers<ApolloContext> = {
           throw new Error('Could not find your task.');
         };
 
-        
         return taskToDelete;
       } catch (err) {
         console.error(err);
