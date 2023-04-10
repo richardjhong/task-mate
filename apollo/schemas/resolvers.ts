@@ -7,7 +7,7 @@ interface ApolloContext {
   db: MongoDB;
 };
 
-type TaskDb = {
+type TaskDbQuery = {
   task: {
     _id?: string;
     title?: string;
@@ -18,11 +18,17 @@ type TaskDb = {
   status?: TaskStatus;
 };
 
+type TaskDbMutation = {
+  _id?: string;
+  title?: string;
+  status?: TaskStatus;
+};
+
 const resolvers: Resolvers<ApolloContext> = {
   Query: {
     tasks: async (parent, args, context) => {
       try {
-        const tasks = args.status ? await Task.find<TaskDb>({ status: args.status }) : await Task.find<TaskDb>();
+        const tasks = args.status ? await Task.find<TaskDbQuery>({ status: args.status }) : await Task.find<TaskDbQuery>();
         const convertedTasks = tasks.map(({ _id, title, status }) => ({
           id: _id.toString(),
           title,
@@ -35,7 +41,7 @@ const resolvers: Resolvers<ApolloContext> = {
     },
     task: async (parent, args, context) => {
       try {
-        const { _id, title, status } = await Task.findById<TaskDb>({ _id: args.id });
+        const { _id, title, status } = await Task.findById<TaskDbQuery>({ _id: args.id });
         const foundTask = {
           id: _id.toString(),
           title,
@@ -50,7 +56,7 @@ const resolvers: Resolvers<ApolloContext> = {
   Mutation: {
     createTask: async (parent, args, context): Promise<TaskType> => {
       try {
-        const task = await Task.create({ 
+        const task = await Task.create<TaskDbMutation>({
           title: args.input.title, 
           status: TaskStatus.Active 
         });
@@ -78,6 +84,7 @@ const resolvers: Resolvers<ApolloContext> = {
           throw new Error('Could not find your task.');
         };
 
+        
         return taskToDelete;
       } catch (err) {
         console.error(err);
