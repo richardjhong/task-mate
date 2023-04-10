@@ -18,6 +18,6 @@ const taskSchema = new Schema<TaskInterface>(
   }
 );
 
-// export const Task = mongoose.model<TaskInterface>('Task', taskSchema);
-
-export default (mongoose.models.Task as mongoose.Model<TaskInterface>) || mongoose.model<TaskInterface>('Task', taskSchema);
+export default 
+  (mongoose.models.Task as mongoose.Model<TaskInterface>) ||
+  mongoose.model<TaskInterface>('Task', taskSchema);

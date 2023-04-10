@@ -16,7 +16,7 @@ const userSchema = new Schema<UserInterface>({
   }
 });
 
-export default (
-  mongoose.models.User as mongoose.Model<UserInterface>) || 
-  mongoose.model<UserInterface>('User', userSchema
-);
+export default 
+  (mongoose.models.User as mongoose.Model<UserInterface>) || 
+  mongoose.model<UserInterface>('User', userSchema)
+  

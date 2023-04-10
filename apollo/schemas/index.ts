@@ -1,2 +1,2 @@
-export { typeDefs } from './typeDefs.ts';
-export { resolvers } from './resolvers.ts';
+export {default as typeDefs } from './typeDefs.ts';
+export {default as resolvers } from './resolvers.ts';
