@@ -26,7 +26,7 @@ const taskSchema = new Schema<TaskInterface>(
       required: true,
       enum: Object.values(TaskStatus)
     }
-  }
+  },
 );
 
 export default (mongoose.models.Task as mongoose.Model<TaskInterface>) || mongoose.model<TaskInterface>('Task', taskSchema);

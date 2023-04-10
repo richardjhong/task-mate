@@ -7,42 +7,56 @@ interface ApolloContext {
   db: MongoDB;
 };
 
+type TaskDbQuery = {
+  task: {
+    _id?: string;
+    title?: string;
+    status?: TaskStatus;
+  }[],
+  _id?: string;
+  title?: string;
+  status?: TaskStatus;
+};
+
+type TaskDbMutation = {
+  _id?: string;
+  title?: string;
+  status?: TaskStatus;
+};
+
 const resolvers: Resolvers<ApolloContext> = {
   Query: {
-    tasks: async (
-      parent, 
-      args, 
-      context
-    ) => {
+    tasks: async (parent, args, context) => {
       try {
-        const tasks = args.status ? await Task.find({ status: args.status }) : await Task.find();
-        tasks.forEach(task => task.id = task._id);
-        return tasks;
+        const tasks = args.status ? await Task.find<TaskDbQuery>({ status: args.status }) : await Task.find<TaskDbQuery>();
+        const convertedTasks = tasks.map(({ _id, title, status }) => ({
+          id: _id.toString(),
+          title,
+          status
+        }));
+        return convertedTasks;
       } catch (err) {
         console.error(err);
       };
     },
     task: async (parent, args, context) => {
-      return null;
-    },
-    books: async (parent, args, context) => [],
-    users: async (parent, args, context) => {
       try {
-        const users = await User.find({});
-        return users;
+        const { _id, title, status } = await Task.findById<TaskDbQuery>({ _id: args.id });
+        const foundTask = {
+          id: _id.toString(),
+          title,
+          status
+        };
+        return foundTask;
       } catch (err) {
         console.error(err);
       };
-    }
+    },
   },
   Mutation: {
-    createTask: async (
-      parent, 
-      args, 
-      context
-    ): Promise<TaskType> => {
+    createTask: async (parent, args, context): Promise<TaskType> => {
       try {
-        const task = await Task.create({ 
+        const task = await Task.create<TaskDbMutation>({
           title: args.input.title, 
           status: TaskStatus.Active 
         });
@@ -51,11 +65,30 @@ const resolvers: Resolvers<ApolloContext> = {
         console.error(err);
       };
     },
-    updateTask: (parent, args, context) => {
-      return null;
+    updateTask: async (parent, args, context): Promise<TaskType> => {
+      try {
+        const updatedFields = {};
+        if (args.input.title) updatedFields['title'] = args.input.title;
+        if (args.input.status) updatedFields['status'] = args.input.status;
+
+        const foundTask = await Task.findByIdAndUpdate({ _id: args.input.id }, updatedFields, { new: true });
+        return foundTask;
+      } catch (err) {
+        console.error(err);
+      };
     },
-    deleteTask: (parent, args, context) => {
-      return null;
+    deleteTask: async (parent, args, context): Promise<TaskType> => {
+      try {
+        const taskToDelete = await Task.findByIdAndDelete({ _id: args.id });
+        if (!taskToDelete) {
+          throw new Error('Could not find your task.');
+        };
+
+        
+        return taskToDelete;
+      } catch (err) {
+        console.error(err);
+      };
     },
   },
 };
