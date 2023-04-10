@@ -7,7 +7,7 @@ enum TaskStatus {
 }
 
 interface Task {
-  id: number;
+  id: Types.ObjectId;
   title: string;
   status: TaskStatus;
 }
@@ -20,8 +20,9 @@ const resolvers = {
       context
     ): Promise<Task[]> => {
       try {
-        const tasks = await Task.find()
-        return args.status ? tasks.filter(task => task.status === args.status) : tasks;
+        const tasks = args.status ? await Task.find({ status: args.status }) : await Task.find();
+        tasks.forEach(task => task.id = task._id);
+        return tasks;
       } catch (err) {
         console.error(err);
       };
