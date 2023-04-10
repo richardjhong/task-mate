@@ -8,7 +8,7 @@ const typeDefs = gql`
   }
 
   type Task {
-    id: Int!
+    id: ID
     title: String!
     status: TaskStatus!
   }
@@ -18,7 +18,7 @@ const typeDefs = gql`
   }
 
   input UpdateTaskInput {
-    id: Int!
+    id: ID
     title: String
     status: TaskStatus
   }
@@ -39,7 +39,7 @@ const typeDefs = gql`
 
   type Query {
     tasks(status: TaskStatus): [Task!]!
-    task(id: Int!): Task
+    task(id: ID!): Task
     books: [Book]
     users: [User]
   }
@@ -47,7 +47,7 @@ const typeDefs = gql`
   type Mutation {
     createTask(input: CreateTaskInput!): Task
     updateTask(input: UpdateTaskInput!): Task
-    deleteTask(id: Int!): Task
+    deleteTask(id: ID!): Task
   }
 `;
 
