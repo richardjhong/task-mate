@@ -5,3 +5,11 @@ mutation CreateTask($input: CreateTaskInput!) {
     title
   }
 }
+
+mutation UpdateTask($input: UpdateTaskInput!) {
+  updateTask(input: $input) {
+    id
+    status
+    title
+  }
+}
