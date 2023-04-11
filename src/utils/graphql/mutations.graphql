@@ -13,3 +13,11 @@ mutation UpdateTask($input: UpdateTaskInput!) {
     title
   }
 }
+
+mutation Mutation($deleteTaskId: ID!) {
+  deleteTask(id: $deleteTaskId) {
+    id
+    status
+    title
+  }
+}
