@@ -14,19 +14,8 @@ export type Scalars = {
   Float: number;
 };
 
-export type Book = {
-  __typename?: 'Book';
-  author?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-};
-
 export type CreateTaskInput = {
   title: Scalars['String'];
-};
-
-export type Example = {
-  __typename?: 'Example';
-  name: Scalars['String'];
 };
 
 export type Mutation = {
@@ -53,10 +42,8 @@ export type MutationUpdateTaskArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  books?: Maybe<Array<Maybe<Book>>>;
   task?: Maybe<Task>;
-  tasks: Array<Task>;
-  users?: Maybe<Array<Maybe<User>>>;
+  tasks: Array<Maybe<Task>>;
 };
 
 
@@ -85,12 +72,6 @@ export type UpdateTaskInput = {
   id?: InputMaybe<Scalars['ID']>;
   status?: InputMaybe<TaskStatus>;
   title?: InputMaybe<Scalars['String']>;
-};
-
-export type User = {
-  __typename?: 'User';
-  firstName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
 };
 
 export type AdditionalEntityFields = {
@@ -169,33 +150,27 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Book: ResolverTypeWrapper<Book>;
-  String: ResolverTypeWrapper<Scalars['String']>;
   CreateTaskInput: CreateTaskInput;
-  Example: ResolverTypeWrapper<Example>;
+  String: ResolverTypeWrapper<Scalars['String']>;
   Mutation: ResolverTypeWrapper<{}>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Query: ResolverTypeWrapper<{}>;
   Task: ResolverTypeWrapper<Task>;
   TaskStatus: TaskStatus;
   UpdateTaskInput: UpdateTaskInput;
-  User: ResolverTypeWrapper<User>;
   AdditionalEntityFields: AdditionalEntityFields;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Book: Book;
-  String: Scalars['String'];
   CreateTaskInput: CreateTaskInput;
-  Example: Example;
+  String: Scalars['String'];
   Mutation: {};
   ID: Scalars['ID'];
   Query: {};
   Task: Task;
   UpdateTaskInput: UpdateTaskInput;
-  User: User;
   AdditionalEntityFields: AdditionalEntityFields;
   Boolean: Scalars['Boolean'];
 };
@@ -247,17 +222,6 @@ export type MapDirectiveArgs = {
 
 export type MapDirectiveResolver<Result, Parent, ContextType = any, Args = MapDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
-export type BookResolvers<ContextType = any, ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book']> = {
-  author?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type ExampleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Example'] = ResolversParentTypes['Example']> = {
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createTask?: Resolver<Maybe<ResolversTypes['Task']>, ParentType, ContextType, RequireFields<MutationCreateTaskArgs, 'input'>>;
   deleteTask?: Resolver<Maybe<ResolversTypes['Task']>, ParentType, ContextType, RequireFields<MutationDeleteTaskArgs, 'id'>>;
@@ -265,10 +229,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  books?: Resolver<Maybe<Array<Maybe<ResolversTypes['Book']>>>, ParentType, ContextType>;
   task?: Resolver<Maybe<ResolversTypes['Task']>, ParentType, ContextType, RequireFields<QueryTaskArgs, 'id'>>;
-  tasks?: Resolver<Array<ResolversTypes['Task']>, ParentType, ContextType, Partial<QueryTasksArgs>>;
-  users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
+  tasks?: Resolver<Array<Maybe<ResolversTypes['Task']>>, ParentType, ContextType, Partial<QueryTasksArgs>>;
 };
 
 export type TaskResolvers<ContextType = any, ParentType extends ResolversParentTypes['Task'] = ResolversParentTypes['Task']> = {
@@ -278,19 +240,10 @@ export type TaskResolvers<ContextType = any, ParentType extends ResolversParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type Resolvers<ContextType = any> = {
-  Book?: BookResolvers<ContextType>;
-  Example?: ExampleResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Task?: TaskResolvers<ContextType>;
-  User?: UserResolvers<ContextType>;
 };
 
 export type DirectiveResolvers<ContextType = any> = {
