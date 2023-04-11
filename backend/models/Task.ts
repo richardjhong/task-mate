@@ -6,17 +6,12 @@ enum TaskStatus {
 }
 
 interface TaskInterface {
-  id: Types.ObjectId,
   title: string;
   status: TaskStatus;
 };
 
 const taskSchema = new Schema<TaskInterface>(
   {
-    id: {
-      type: Schema.Types.ObjectId,
-      required: true
-    },
     title: {
       type: String,
       required: true,

@@ -56,11 +56,16 @@ export const resolvers: Resolvers<ApolloContext> = {
   Mutation: {
     createTask: async (parent, args, context): Promise<TaskType> => {
       try {
-        const task = await Task.create<TaskDbMutation>({
+        const { _id, title, status } = await Task.create<TaskDbMutation>({
           title: args.input.title, 
           status: TaskStatus.Active 
         });
-        return task;
+        const createdTask = {
+          id: _id.toString(),
+          title,
+          status
+        };
+        return createdTask;
       } catch (err) {
         console.error(err);
       };
@@ -71,7 +76,12 @@ export const resolvers: Resolvers<ApolloContext> = {
         if (args.input.title) updatedFields['title'] = args.input.title;
         if (args.input.status) updatedFields['status'] = args.input.status;
 
-        const foundTask = await Task.findByIdAndUpdate({ _id: args.input.id }, updatedFields, { new: true });
+        const { _id, title, status } = await Task.findByIdAndUpdate({ _id: args.input.id }, updatedFields, { new: true });
+        const foundTask = {
+          id: _id.toString(),
+          title,
+          status
+        };
         return foundTask;
       } catch (err) {
         console.error(err);
