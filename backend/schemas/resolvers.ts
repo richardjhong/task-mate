@@ -1,5 +1,5 @@
 import { Resolvers, TaskStatus, Task as TaskType } from '../../generated/graphql-backend';
-import { Task } from '../../src/pages/api/models';
+import { Task } from '../models/';
 import { Db as MongoDB } from 'mongodb';
 
 interface ApolloContext {
@@ -23,11 +23,12 @@ type TaskDbMutation = {
   status?: TaskStatus;
 };
 
-const resolvers: Resolvers<ApolloContext> = {
+export const resolvers: Resolvers<ApolloContext> = {
   Query: {
     tasks: async (parent, args, context) => {
       try {
         const tasks = args.status ? await Task.find<TaskDbQuery>({ status: args.status }) : await Task.find<TaskDbQuery>();
+
         const convertedTasks = tasks.map(({ _id, title, status }) => ({
           id: _id.toString(),
           title,
@@ -90,5 +91,3 @@ const resolvers: Resolvers<ApolloContext> = {
     },
   },
 };
-
-export default resolvers;

@@ -1,6 +1,6 @@
 import { gql } from 'graphql-tag';
 
-const typeDefs = gql`
+export const typeDefs = gql`
   enum TaskStatus {
     active
     completed
@@ -33,5 +33,3 @@ const typeDefs = gql`
     deleteTask(id: ID!): Task
   }
 `;
-
-export default typeDefs;
