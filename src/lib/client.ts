@@ -2,7 +2,6 @@ import {
   ApolloClient,
   InMemoryCache,
   type NormalizedCacheObject,
-  createHttpLink
 } from '@apollo/client';
 import merge from 'deepmerge';
 import isEqual from 'lodash.isequal';
