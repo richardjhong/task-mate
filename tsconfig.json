@@ -24,8 +24,10 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/pages/api/graphql.ts", "backend/schemas/resolvers.ts"  ],
+    "**/*.tsx", 
+    "src/pages/api/graphql.ts", 
+    "backend/schemas/resolvers.ts" 
+  ],
   "exclude": [
     "node_modules"
   ]
