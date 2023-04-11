@@ -7,4 +7,4 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/task_mate', {
   useUnifiedTopology: true,
 });
 
-module.exports = mongoose.connection;
+export default mongoose.connection;

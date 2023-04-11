@@ -2,7 +2,7 @@ import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { schema } from '../../../backend/schemas';
 import { Db as MongoDB } from 'mongodb';
-const db = require('../../../backend/config/connection');
+import db from '../../../backend/config/connection';
 
 interface ApolloContext {
   db: MongoDB;
