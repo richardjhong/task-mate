@@ -89,12 +89,12 @@ export type UpdateTaskMutationVariables = Exact<{
 
 export type UpdateTaskMutation = { __typename?: 'Mutation', updateTask?: { __typename?: 'Task', id?: string | null, status: TaskStatus, title: string } | null };
 
-export type MutationMutationVariables = Exact<{
-  deleteTaskId: Scalars['ID'];
+export type DeleteTaskMutationVariables = Exact<{
+  id: Scalars['ID'];
 }>;
 
 
-export type MutationMutation = { __typename?: 'Mutation', deleteTask?: { __typename?: 'Task', id?: string | null, status: TaskStatus, title: string } | null };
+export type DeleteTaskMutation = { __typename?: 'Mutation', deleteTask?: { __typename?: 'Task', id?: string | null, status: TaskStatus, title: string } | null };
 
 export type TasksQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -179,41 +179,41 @@ export function useUpdateTaskMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UpdateTaskMutationHookResult = ReturnType<typeof useUpdateTaskMutation>;
 export type UpdateTaskMutationResult = Apollo.MutationResult<UpdateTaskMutation>;
 export type UpdateTaskMutationOptions = Apollo.BaseMutationOptions<UpdateTaskMutation, UpdateTaskMutationVariables>;
-export const MutationDocument = gql`
-    mutation Mutation($deleteTaskId: ID!) {
-  deleteTask(id: $deleteTaskId) {
+export const DeleteTaskDocument = gql`
+    mutation DeleteTask($id: ID!) {
+  deleteTask(id: $id) {
     id
     status
     title
   }
 }
     `;
-export type MutationMutationFn = Apollo.MutationFunction<MutationMutation, MutationMutationVariables>;
+export type DeleteTaskMutationFn = Apollo.MutationFunction<DeleteTaskMutation, DeleteTaskMutationVariables>;
 
 /**
- * __useMutationMutation__
+ * __useDeleteTaskMutation__
  *
- * To run a mutation, you first call `useMutationMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useMutationMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useDeleteTaskMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteTaskMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [mutationMutation, { data, loading, error }] = useMutationMutation({
+ * const [deleteTaskMutation, { data, loading, error }] = useDeleteTaskMutation({
  *   variables: {
- *      deleteTaskId: // value for 'deleteTaskId'
+ *      id: // value for 'id'
  *   },
  * });
  */
-export function useMutationMutation(baseOptions?: Apollo.MutationHookOptions<MutationMutation, MutationMutationVariables>) {
+export function useDeleteTaskMutation(baseOptions?: Apollo.MutationHookOptions<DeleteTaskMutation, DeleteTaskMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<MutationMutation, MutationMutationVariables>(MutationDocument, options);
+        return Apollo.useMutation<DeleteTaskMutation, DeleteTaskMutationVariables>(DeleteTaskDocument, options);
       }
-export type MutationMutationHookResult = ReturnType<typeof useMutationMutation>;
-export type MutationMutationResult = Apollo.MutationResult<MutationMutation>;
-export type MutationMutationOptions = Apollo.BaseMutationOptions<MutationMutation, MutationMutationVariables>;
+export type DeleteTaskMutationHookResult = ReturnType<typeof useDeleteTaskMutation>;
+export type DeleteTaskMutationResult = Apollo.MutationResult<DeleteTaskMutation>;
+export type DeleteTaskMutationOptions = Apollo.BaseMutationOptions<DeleteTaskMutation, DeleteTaskMutationVariables>;
 export const TasksDocument = gql`
     query Tasks {
   tasks {
