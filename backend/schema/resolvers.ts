@@ -8,13 +8,13 @@ interface ApolloContext {
 
 type TaskDbQuery = {
   task: {
-    _id?: string;
-    title?: string;
-    status?: TaskStatus;
+    _id: string;
+    title: string;
+    status: TaskStatus;
   }[],
-  _id?: string;
-  title?: string;
-  status?: TaskStatus;
+  _id: string;
+  title: string;
+  status: TaskStatus;
 };
 
 type TaskDbMutation = {
@@ -23,17 +23,20 @@ type TaskDbMutation = {
   status?: TaskStatus;
 };
 
+const convertIdWithoutUnderscore = ({ _id, title, status }) => {
+  return {
+    id: _id.toString(),
+    title,
+    status
+  };
+};
+
 export const resolvers: Resolvers<ApolloContext> = {
   Query: {
     tasks: async (parent, args, context) => {
       try {
-        const tasks = args.status ? await Task.find<TaskDbQuery>({ status: args.status }) : await Task.find<TaskDbQuery>();
-
-        const convertedTasks = tasks.map(({ _id, title, status }) => ({
-          id: _id.toString(),
-          title,
-          status
-        }));
+        const originalTasks = args.status ? await Task.find<TaskDbQuery>({ status: args.status }) : await Task.find<TaskDbQuery>();
+        const convertedTasks = originalTasks.map((originalTask) => convertIdWithoutUnderscore(originalTask));
         return convertedTasks;
       } catch (err) {
         console.error(err);
@@ -41,13 +44,8 @@ export const resolvers: Resolvers<ApolloContext> = {
     },
     task: async (parent, args, context) => {
       try {
-        const { _id, title, status } = await Task.findById<TaskDbQuery>({ _id: args.id });
-        const foundTask = {
-          id: _id.toString(),
-          title,
-          status
-        };
-        return foundTask;
+        const originalTask = await Task.findById<TaskDbQuery>({ _id: args.id });
+        return convertIdWithoutUnderscore(originalTask);
       } catch (err) {
         console.error(err);
       };
@@ -56,11 +54,12 @@ export const resolvers: Resolvers<ApolloContext> = {
   Mutation: {
     createTask: async (parent, args, context): Promise<TaskType> => {
       try {
-        const task = await Task.create<TaskDbMutation>({
+        const originalTask = await Task.create<TaskDbMutation>({
           title: args.input.title, 
           status: TaskStatus.Active 
         });
-        return task;
+
+        return convertIdWithoutUnderscore(originalTask);
       } catch (err) {
         console.error(err);
       };
@@ -71,8 +70,8 @@ export const resolvers: Resolvers<ApolloContext> = {
         if (args.input.title) updatedFields['title'] = args.input.title;
         if (args.input.status) updatedFields['status'] = args.input.status;
 
-        const foundTask = await Task.findByIdAndUpdate({ _id: args.input.id }, updatedFields, { new: true });
-        return foundTask;
+        const originalTask = await Task.findByIdAndUpdate({ _id: args.input.id }, updatedFields, { new: true });
+        return convertIdWithoutUnderscore(originalTask);
       } catch (err) {
         console.error(err);
       };
@@ -80,6 +79,7 @@ export const resolvers: Resolvers<ApolloContext> = {
     deleteTask: async (parent, args, context): Promise<TaskType> => {
       try {
         const taskToDelete = await Task.findByIdAndDelete({ _id: args.id });
+
         if (!taskToDelete) {
           throw new Error('Could not find your task.');
         };

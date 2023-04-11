@@ -43,7 +43,7 @@ export type MutationUpdateTaskArgs = {
 export type Query = {
   __typename?: 'Query';
   task?: Maybe<Task>;
-  tasks: Array<Maybe<Task>>;
+  tasks: Array<Task>;
 };
 
 
@@ -230,7 +230,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   task?: Resolver<Maybe<ResolversTypes['Task']>, ParentType, ContextType, RequireFields<QueryTaskArgs, 'id'>>;
-  tasks?: Resolver<Array<Maybe<ResolversTypes['Task']>>, ParentType, ContextType, Partial<QueryTasksArgs>>;
+  tasks?: Resolver<Array<ResolversTypes['Task']>, ParentType, ContextType, Partial<QueryTasksArgs>>;
 };
 
 export type TaskResolvers<ContextType = any, ParentType extends ResolversParentTypes['Task'] = ResolversParentTypes['Task']> = {

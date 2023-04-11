@@ -13,7 +13,6 @@ db.once('open', () => {
   console.log(`Use GraphQL at http://localhost/api/graphql`);
 });
 
-// console.log("testing: ", schema);
 
 const server = new ApolloServer<ApolloContext>({ schema });
 

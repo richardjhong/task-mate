@@ -6,12 +6,9 @@ import TaskList from '../components/TaskList.tsx';
 import CreateTaskForm from '../components/CreateTaskForm.tsx';
 
 const Home = () => {
-  const { loading: tasksLoading, data: tasksData, error: tasksError } = useTasksQuery();
+  const fetchedTasks = useTasksQuery();
+  const { loading: tasksLoading, data: tasksData, error: tasksError } = fetchedTasks;
   const tasks = tasksData.tasks;
-
-  if (tasksError) {
-    return <p>an error happened</p>;
-  };
   
   return (
     <div>
@@ -19,7 +16,7 @@ const Home = () => {
         <title>Tasks</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <CreateTaskForm />
+      <CreateTaskForm onSuccess={fetchedTasks.refetch}/>
       {tasksLoading && <p>Loading tasks...</p>}
       {tasksError && <p>An error occurred.</p>}
       {tasks && tasks.length > 0 ? 
