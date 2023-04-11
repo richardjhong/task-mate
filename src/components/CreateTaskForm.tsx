@@ -22,7 +22,7 @@ const CreateTaskForm: React.FC<Props> = ({ onSuccess }) => {
       try {
         await createTask({ variables: { input: { title }}});
       } catch (err) {
-        console.error(err);
+        // Log the error.
       };
     };
   };
