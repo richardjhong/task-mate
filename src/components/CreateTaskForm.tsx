@@ -1,23 +1,35 @@
 import React, { useState } from 'react'
 import { useCreateTaskMutation } from '../../generated/graphql-frontend';
 
-const CreateTaskForm = () => {
+interface Props {
+  onSuccess: () => void;
+}
+
+const CreateTaskForm: React.FC<Props> = ({ onSuccess }) => {
   const [title, setTitle] = useState('');
   const handleTitleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setTitle(e.target.value);
   };
-  const [createTask] = useCreateTaskMutation();
+  const [createTask, { loading: tasksLoading, error: tasksError }] = useCreateTaskMutation({
+    onCompleted: () => {
+      onSuccess();
+      setTitle('');
+    }
+  });
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    try {
-      await createTask({ variables: { input: { title }}});
-    } catch (err) {
-      console.error(err);
+    if (!tasksLoading) {
+      try {
+        await createTask({ variables: { input: { title }}});
+      } catch (err) {
+        console.error(err);
+      };
     };
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      {tasksError && <p className="alert-error">An error occurred while adding new task.</p>}
       <input 
         type="text" 
         name="title" 
