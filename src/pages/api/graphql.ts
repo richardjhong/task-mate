@@ -9,7 +9,8 @@ interface ApolloContext {
 }
 
 db.once('open', () => {
-  console.log('testing');
+  console.log('Connected to database');
+  console.log(`Use GraphQL at http://localhost/api/graphql`);
 });
 
 const server = new ApolloServer<ApolloContext>({ schema });

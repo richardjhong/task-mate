@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import { useQuery } from '@apollo/client';
 import type { GetStaticProps } from 'next';
-import { addApolloState, initializeApollo } from '../../lib/client.ts';
-import { TASKS_QUERY } from '../utils/queries';
+import { addApolloState, initializeApollo } from '../lib/client.ts';
+import { TASKS_QUERY } from '../utils/queries.tsx';
 
 interface TasksQuery {
   tasks: { 
