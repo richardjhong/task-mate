@@ -1,5 +1,5 @@
 import { Resolvers, TaskStatus, Task as TaskType } from '../../generated/graphql-backend';
-import { Task } from '../models/';
+import { Task } from '../models';
 import { Db as MongoDB } from 'mongodb';
 
 interface ApolloContext {

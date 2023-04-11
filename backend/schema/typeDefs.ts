@@ -23,7 +23,7 @@ export const typeDefs = gql`
   }
 
   type Query {
-    tasks(status: TaskStatus): [Task!]!
+    tasks(status: TaskStatus): [Task]!
     task(id: ID!): Task
   }
 

@@ -1,21 +1,14 @@
 import Head from 'next/head';
-import { useQuery } from '@apollo/client';
 import type { GetStaticProps } from 'next';
 import { addApolloState, initializeApollo } from '../lib/client.ts';
-import { TASKS_QUERY } from '../utils/queries.tsx';
-
-interface TasksQuery {
-  tasks: { 
-    id: number; 
-    title: string; 
-    status: string 
-  }[];
-}
+import { TasksDocument, TasksQuery, useTasksQuery } from '../../generated/graphql-frontend.ts';
+import TaskList from '../components/TaskList.tsx';
+import CreateTaskForm from '../components/CreateTaskForm.tsx';
 
 const Home = () => {
-  const { loading: tasksLoading, data: tasksData, error: tasksError } = useQuery<TasksQuery>(TASKS_QUERY);
+  const { loading: tasksLoading, data: tasksData, error: tasksError } = useTasksQuery();
+  const tasks = tasksData.tasks;
 
-  // check for errors
   if (tasksError) {
     return <p>an error happened</p>;
   };
@@ -24,19 +17,14 @@ const Home = () => {
     <div>
       <Head>
         <title>Tasks</title>
+        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>Tasks</h1>
-      {(tasksLoading || tasksData.tasks === null) ? 
-        <p>Loading Tasks...</p> :
-        (
-          <>
-          {tasksData?.tasks?.map((task) => (
-            <div key={task.id}>
-              {task.title} ({task.status})
-            </div>
-          ))}
-          </>
-        )
+      <CreateTaskForm />
+      {tasksLoading && <p>Loading tasks...</p>}
+      {tasksError && <p>An error occurred.</p>}
+      {tasks && tasks.length > 0 ? 
+        <TaskList tasks={tasks}/> : 
+        <p className="no-tasks-message">No tasks</p>
       }
     </div>
   );
@@ -46,7 +34,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const client = initializeApollo();
 
   await client.query<TasksQuery>({
-    query: TASKS_QUERY,
+    query: TasksDocument,
   });
 
   return addApolloState(client, {

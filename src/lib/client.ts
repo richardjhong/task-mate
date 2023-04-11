@@ -2,6 +2,7 @@ import {
   ApolloClient,
   InMemoryCache,
   type NormalizedCacheObject,
+  createHttpLink
 } from '@apollo/client';
 import merge from 'deepmerge';
 import isEqual from 'lodash.isequal';
@@ -10,7 +11,7 @@ export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null;
 
-function createApolloClient() {
+const createApolloClient = () => {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
     uri: 'http://localhost:3000/api/graphql',
