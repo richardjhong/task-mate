@@ -30,7 +30,7 @@ const Home = () => {
   };
   
   const fetchedTasks = useTasksQuery({ variables: { status: dynamicTasksBasedOnStatus(status) }})
-  const { loading: tasksLoading, data: tasksData, error: tasksError } =
+  const { loading: tasksLoading, data: tasksData, error: tasksError } = fetchedTasks;
   const tasks = tasksData?.tasks || [];
   
   return (
