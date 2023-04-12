@@ -64,11 +64,12 @@ export type Task = {
   title: Scalars['String'];
 };
 
-export enum TaskStatus {
-  Active = 'active',
-  Completed = 'completed'
-}
+export const TaskStatus = {
+  Active: 'active',
+  Completed: 'completed'
+} as const;
 
+export type TaskStatus = typeof TaskStatus[keyof typeof TaskStatus];
 export type UpdateTaskInput = {
   id: Scalars['ID'];
   status?: InputMaybe<TaskStatus>;
@@ -96,10 +97,12 @@ export type DeleteTaskMutationVariables = Exact<{
 
 export type DeleteTaskMutation = { __typename?: 'Mutation', deleteTask?: { __typename?: 'Task', id?: string | null, status: TaskStatus, title: string } | null };
 
-export type TasksQueryVariables = Exact<{ [key: string]: never; }>;
+export type TasksQueryVariables = Exact<{
+  status?: InputMaybe<TaskStatus>;
+}>;
 
 
-export type TasksQuery = { __typename?: 'Query', tasks: Array<{ __typename?: 'Task', id?: string | null, title: string, status: TaskStatus }> };
+export type TasksQuery = { __typename?: 'Query', tasks: Array<{ __typename?: 'Task', id?: string | null, status: TaskStatus, title: string }> };
 
 export type TaskQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -215,11 +218,11 @@ export type DeleteTaskMutationHookResult = ReturnType<typeof useDeleteTaskMutati
 export type DeleteTaskMutationResult = Apollo.MutationResult<DeleteTaskMutation>;
 export type DeleteTaskMutationOptions = Apollo.BaseMutationOptions<DeleteTaskMutation, DeleteTaskMutationVariables>;
 export const TasksDocument = gql`
-    query Tasks {
-  tasks {
+    query Tasks($status: TaskStatus) {
+  tasks(status: $status) {
     id
-    title
     status
+    title
   }
 }
     `;
@@ -236,6 +239,7 @@ export const TasksDocument = gql`
  * @example
  * const { data, loading, error } = useTasksQuery({
  *   variables: {
+ *      status: // value for 'status'
  *   },
  * });
  */

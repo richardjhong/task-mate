@@ -7,10 +7,16 @@ const config: CodegenConfig = {
   documents: 'src/utils/graphql/**/*.graphql',
   generates: {
     "generated/graphql-backend.ts": {
-      plugins: ["typescript", "typescript-resolvers", "typescript-mongodb"]
+      plugins: ["typescript", "typescript-resolvers", "typescript-mongodb"],
+      config: {
+        enumsAsConst: true
+      }
     },
     "generated/graphql-frontend.ts": {
-      plugins: ["typescript", "typescript-operations", "typescript-react-apollo"]
+      plugins: ["typescript", "typescript-operations", "typescript-react-apollo"],
+      config: {
+        enumsAsConst: true
+      }
     }
   }
 };
