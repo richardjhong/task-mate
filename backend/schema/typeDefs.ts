@@ -17,7 +17,7 @@ export const typeDefs = gql`
   }
 
   input UpdateTaskInput {
-    id: ID
+    id: ID!
     title: String
     status: TaskStatus
   }

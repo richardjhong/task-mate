@@ -10,20 +10,20 @@ type TaskDbQuery = {
   task: {
     _id: string;
     title: string;
-    status: TaskStatus;
+    status: string;
   }[],
   _id: string;
   title: string;
-  status: TaskStatus;
+  status: string;
 };
 
 type TaskDbMutation = {
   _id?: string;
   title?: string;
-  status?: TaskStatus;
+  status?: string;
 };
 
-const convertIdWithoutUnderscore = ({ _id, title, status }) => {
+const convertIdWithoutUnderscore = ({ _id, title, status}) => {
   return {
     id: _id.toString(),
     title,
@@ -84,7 +84,7 @@ export const resolvers: Resolvers<ApolloContext> = {
           throw new Error('Could not find your task.');
         };
 
-        return taskToDelete;
+        return convertIdWithoutUnderscore(taskToDelete);
       } catch (err) {
         console.error(err);
       };

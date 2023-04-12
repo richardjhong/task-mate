@@ -7,7 +7,7 @@ enum TaskStatus {
 
 interface TaskInterface {
   title: string;
-  status: TaskStatus;
+  status: string;
 };
 
 const taskSchema = new Schema<TaskInterface>(
