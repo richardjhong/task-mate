@@ -63,12 +63,11 @@ export type Task = {
   title: Scalars['String'];
 };
 
-export const TaskStatus = {
-  Active: 'active',
-  Completed: 'completed'
-} as const;
+export enum TaskStatus {
+  Active = 'active',
+  Completed = 'completed'
+}
 
-export type TaskStatus = typeof TaskStatus[keyof typeof TaskStatus];
 export type UpdateTaskInput = {
   id: Scalars['ID'];
   status?: InputMaybe<TaskStatus>;
