@@ -13,7 +13,7 @@ let apolloClient: ApolloClient<NormalizedCacheObject> | null;
 const createApolloClient = () => {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    uri: 'http://localhost:3000/api/graphql',
+    uri: 'https://task-tracker-mate.herokuapp.com/api/graphql',
     cache: new InMemoryCache(),
   });
 }
