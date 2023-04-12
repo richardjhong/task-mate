@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Task, useDeleteTaskMutation } from '../../generated/graphql-frontend';
+import { Task, TaskStatus, useDeleteTaskMutation, useUpdateTaskMutation } from '../../generated/graphql-frontend';
 import Link from 'next/link';
 import { Reference } from '@apollo/client';
 
@@ -41,14 +41,35 @@ const TaskListItem: React.FC<Props> = ({ task }) => {
     }
   }, [deleteError]);
 
+  const [updateTask, { loading: updateLoading, error: updateError }] = useUpdateTaskMutation({ errorPolicy: 'all' });
+
+  const handleStatusChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const newStatus = e.target.checked ? TaskStatus.Completed : TaskStatus.Active;  
+    updateTask({ variables: { input: { id: task.id, status: newStatus }}});
+  };
+
+  useEffect(() => {
+    if (updateError) {
+      alert('An error occurred while updating task status, please try again later.');
+    };
+  }, [updateError]);
+
   return (
     <li key={task.id} className="task-list-item">
+      <label className="checkbox">
+        <input 
+          type="checkbox" 
+          onChange={handleStatusChange} 
+          checked={task.status === TaskStatus.Completed}
+          disabled={updateLoading}
+        />
+        <span className="checkbox-mark">&#10003;</span>
+      </label>
       <Link href="/update/[id]" as={`/update/${task.id}`}>
         <div className="task-list-item-title">
           {task.title} 
         </div>
       </Link>
-      ({task.status})
       <button 
         className="task-list-item-delete" 
         onClick={handleDeleteClick}
