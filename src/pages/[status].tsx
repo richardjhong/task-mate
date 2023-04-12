@@ -1,26 +1,27 @@
 import Head from 'next/head';
 import type { GetServerSideProps } from 'next';
-import { addApolloState, initializeApollo } from '../lib/client.ts';
+import { initializeApollo } from '../lib/client.ts';
 import { TaskStatus, TasksDocument, TasksQuery, TasksQueryVariables, useTasksQuery } from '../../generated/graphql-frontend.ts';
 import TaskList from '../components/TaskList.tsx';
 import CreateTaskForm from '../components/CreateTaskForm.tsx';
 import { useRouter } from 'next/router';
 import Error from 'next/error';
 import TaskFilter from '../components/TaskFilter.tsx';
+import { useEffect, useRef } from 'react';
 
 const isTaskStatus = (value: string): value is TaskStatus =>
   Object.values(TaskStatus).includes(value as TaskStatus);
 
-const dynamicTasksBasedOnStatus = (status) => {
+const convertQueryStatusToEnum = (status) => {
   switch (status) {
     case 'active':
-      return 'active';
+      return TaskStatus.Active;
     case 'completed':
-      return 'completed';
+      return TaskStatus.Completed;
     default: 
       return undefined;
   };
-}
+};
 
 const Home = () => {
   const router = useRouter();
@@ -28,8 +29,19 @@ const Home = () => {
   if (status !== undefined && !isTaskStatus(status)) {
     return <Error statusCode={404} />;
   };
+
+  const prevStatus = useRef(status);
+
+  useEffect(() => {
+    prevStatus.current = status;
+  }, [status]);
   
-  const fetchedTasks = useTasksQuery({ variables: { status: dynamicTasksBasedOnStatus(status) }})
+  const fetchedTasks = useTasksQuery({ 
+    variables: { 
+      status: convertQueryStatusToEnum(status) 
+    },
+    fetchPolicy: prevStatus.current === status ? 'cache-first' : 'cache-and-network'
+  });
   const { loading: tasksLoading, data: tasksData, error: tasksError } = fetchedTasks;
   const tasks = tasksData?.tasks || [];
   
@@ -40,13 +52,13 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <CreateTaskForm onSuccess={fetchedTasks.refetch}/>
-      {tasksLoading && <p>Loading tasks...</p>}
+      {tasksLoading && !tasks && <p>Loading tasks...</p>}
       {tasksError && <p>An error occurred.</p>}
       {tasks && tasks.length > 0 ? 
         <TaskList tasks={tasks}/> : 
         <p className="no-tasks-message">No tasks</p>
       }
-      <TaskFilter />
+      <TaskFilter status={convertQueryStatusToEnum(status)} />
     </div>
   );
 };
@@ -62,7 +74,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   
     await apolloClient.query<TasksQuery, TasksQueryVariables>({
       query: TasksDocument,
-      variables: { status: "active" }
+      variables: { status: convertQueryStatusToEnum(status) }
     });
   
     return {
