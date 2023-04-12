@@ -5,9 +5,9 @@ import { TaskStatus, TasksDocument, TasksQuery, TasksQueryVariables, useTasksQue
 import TaskList from '../components/TaskList.tsx';
 import CreateTaskForm from '../components/CreateTaskForm.tsx';
 import { useRouter } from 'next/router';
-import Error from 'next/error';
 import TaskFilter from '../components/TaskFilter.tsx';
 import { useEffect, useRef } from 'react';
+import Custom404 from './404.tsx';
 
 const isTaskStatus = (value: string): value is TaskStatus =>
   Object.values(TaskStatus).includes(value as TaskStatus);
@@ -25,9 +25,9 @@ const convertQueryStatusToEnum = (status) => {
 
 const Home = () => {
   const router = useRouter();
-  const status = typeof router.query.status === 'string' ? router.query.status : undefined;
+  const status = Array.isArray(router.query.status) ? router.query.status[0] : undefined;
   if (status !== undefined && !isTaskStatus(status)) {
-    return <Error statusCode={404} />;
+    return <Custom404 />;
   };
 
   const prevStatus = useRef(status);
@@ -65,8 +65,8 @@ const Home = () => {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const status =
-  typeof ctx.params?.status === 'string'
-    ? ctx.params.status
+  Array.isArray(ctx.params.status) 
+    ? ctx.params.status[0]
     : undefined;
 
   if (status === undefined || isTaskStatus(status)) {
