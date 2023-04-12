@@ -23,14 +23,13 @@ type TaskDbMutation = {
   status?: TaskStatus;
 };
 
-const convertIdWithoutUnderscore = ({ _id, title, status}) => {
+const convertIdWithoutUnderscore = ({ _id, title, status }) => {
   return {
     id: _id.toString(),
     title,
     status
   };
 };
-//
 
 export const resolvers: Resolvers<ApolloContext> = {
   Query: {
