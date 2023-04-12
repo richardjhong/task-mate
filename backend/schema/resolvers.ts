@@ -84,7 +84,7 @@ export const resolvers: Resolvers<ApolloContext> = {
           throw new Error('Could not find your task.');
         };
 
-        return taskToDelete;
+        return convertIdWithoutUnderscore(taskToDelete);
       } catch (err) {
         console.error(err);
       };
