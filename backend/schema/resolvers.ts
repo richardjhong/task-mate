@@ -10,17 +10,17 @@ type TaskDbQuery = {
   task: {
     _id: string;
     title: string;
-    status: string;
+    status: TaskStatus;
   }[],
   _id: string;
   title: string;
-  status: string;
+  status: TaskStatus;
 };
 
 type TaskDbMutation = {
   _id?: string;
   title?: string;
-  status?: string;
+  status?: TaskStatus;
 };
 
 const convertIdWithoutUnderscore = ({ _id, title, status}) => {
