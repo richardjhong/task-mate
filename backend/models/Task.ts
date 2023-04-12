@@ -3,7 +3,7 @@ import mongoose, { Schema, Types } from 'mongoose';
 enum TaskStatus {
   Active = 'active',
   Completed = 'completed',
-}
+};
 
 interface TaskInterface {
   title: string;
