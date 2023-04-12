@@ -69,7 +69,7 @@ export enum TaskStatus {
 }
 
 export type UpdateTaskInput = {
-  id?: InputMaybe<Scalars['ID']>;
+  id: Scalars['ID'];
   status?: InputMaybe<TaskStatus>;
   title?: InputMaybe<Scalars['String']>;
 };
