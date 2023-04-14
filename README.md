@@ -10,6 +10,7 @@ This project was largely built in tandem with the Udemy course [Using TypeScript
 
 I created this project to learn how to use TypeScript in tandem with React as well as start using Next.js which is the recommended React environment over Create-React-App. Although I am familiar with using MySQL, I intentionally shifted to using MongoDB during the course to gain a thorough understanding of TypeScript. This allowed me to use TypeScript effectively irrespective of the database or environment I choose to work with.
 
+[You can see the deployed live site here](https://task-tracker-mate.herokuapp.com/completed)
 ___
 
 ## Description
@@ -60,6 +61,9 @@ After installing the app or launching the deployed link, the User can either:
 [Using TypeScript with React](https://www.udemy.com/course/react-with-typescript/)
 
 [Next js + GraphQL + TypeScript Setup](https://github.com/ivanms1/nextjs-apollo-ssr)
+
+## Thoughts
+I initially expected the implementation of this app to be straightforward because of my familiarity with the MERN stack and vanilla JavaScript. While my background knowledge did help in the learning process, the main focus of this app was on understanding TypeScript. However, I encountered friction initially and had the urge to convert files to JavaScript instead. Additionally, I deliberately chose to use MongoDB instead of MySQL, which was used in the course, to challenge myself and not solely rely on the lectures for working code. I knew that this decision would come with more difficulty, but I believed it would lead to a better understanding of TypeScript. Despite facing initial confusion and troubleshooting, I found that towards the end of the project, I became more comfortable and developed a better intuition for TypeScript, making this choice worthwhile.
 
 
 ## License
