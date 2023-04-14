@@ -200,7 +200,6 @@ button {
 .socialLinks {
   margin: 0 auto;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
 }
 
@@ -209,7 +208,6 @@ button {
   justify-content: flex-end;
   align-items: center;
   margin-right: 50px;
-  /* marginLeft: 0 auto; */
 }
 
 .techstackContainer {
