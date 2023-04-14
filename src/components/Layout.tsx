@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import Footer from './Footer/Footer';
+import Footer from './Footer';
 
 interface Props {
   children: React.ReactNode;

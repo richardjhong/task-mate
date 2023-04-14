@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
   const [profileImage, setProfileImage] = useState(null);
 
   useEffect(() => {
-    const fetchProfileImage = async () => {
+    const fetchProfileImage = async (): Promise<void> => {
       const response = await fetch(socialLinks.githubProfile());
       const data = await response.json();
       setProfileImage(data.avatar_url);
