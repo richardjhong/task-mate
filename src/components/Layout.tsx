@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
+import Footer from './Footer/Footer';
 
 interface Props {
   children: React.ReactNode;
@@ -7,6 +8,7 @@ interface Props {
 
 const Layout: React.FC<Props> = ({ children }) => {
   return (
+    <>
     <div className="page">
       <Link href="/">
         <div className="logo">
@@ -15,6 +17,9 @@ const Layout: React.FC<Props> = ({ children }) => {
       </Link>
       {children}
     </div>
+    <Footer />
+
+    </>
   );
 };
 

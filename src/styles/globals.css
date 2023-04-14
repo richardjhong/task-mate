@@ -188,3 +188,40 @@ button {
 .task-filter a:hover {
   color: var(--text-color);
 }
+
+.footerContainer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: [first] 20% auto [last] 20%;
+}
+
+.socialLinks {
+  margin: 0 auto;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.copyrightText {
+  display: flex; 
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 50px;
+  /* marginLeft: 0 auto; */
+}
+
+.techstackContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width:100%;
+  justify-content: flex-start;
+  margin-left: 50px;
+}
+
+.links-container {
+  display: flex;
+  cursor: pointer;
+}
