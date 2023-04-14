@@ -10,11 +10,19 @@ export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null;
 
+const dynamicUri = () => {
+  return process.env.NODE_ENV === 'production' ? 'https://task-tracker-mate.herokuapp.com/api/graphql' :
+  'http://localhost:3000/api/graphql'
+};
+
 const createApolloClient = () => {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    uri: 'http://localhost:3000/api/graphql',
+    uri: dynamicUri(),
     cache: new InMemoryCache(),
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    }
   });
 }
 

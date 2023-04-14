@@ -44,7 +44,7 @@ const Home = () => {
   });
   const { loading: tasksLoading, data: tasksData, error: tasksError } = fetchedTasks;
   const tasks = tasksData?.tasks || [];
-  
+
   return (
     <div>
       <Head>
