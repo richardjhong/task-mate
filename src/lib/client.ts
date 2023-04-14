@@ -20,6 +20,9 @@ const createApolloClient = () => {
     ssrMode: typeof window === 'undefined',
     uri: dynamicUri(),
     cache: new InMemoryCache(),
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    }
   });
 }
 
