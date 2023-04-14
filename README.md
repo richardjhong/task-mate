@@ -63,7 +63,9 @@ After installing the app or launching the deployed link, the User can either:
 [Next js + GraphQL + TypeScript Setup](https://github.com/ivanms1/nextjs-apollo-ssr)
 
 ## Thoughts
-I initially expected the implementation of this app to be straightforward because of my familiarity with the MERN stack and vanilla JavaScript. While my background knowledge did help in the learning process, the main focus of this app was on understanding TypeScript; however, I encountered friction early on and had the urge to convert files to JavaScript instead. Additionally, I deliberately chose to use MongoDB instead of MySQL, which was used in the course, to challenge myself and not solely rely on the lectures for working code. I knew that this decision would come with more difficulty, but I believed it would lead to a better understanding of TypeScript. Despite facing initial confusion and troubleshooting, I found that towards the end of the project, I became more comfortable and developed a better intuition for TypeScript, making this choice worthwhile.
+I initially expected the implementation of this app to be straightforward because of my familiarity with the MERN stack and vanilla JavaScript. While my background knowledge did help in the learning process, the main focus of this app was on understanding TypeScript; however, I encountered friction early on and had the urge to convert files to JavaScript instead. 
+
+Additionally, I deliberately chose to use MongoDB instead of MySQL, which was used in the course, to challenge myself and not solely rely on the lectures for working code. I knew that this decision would come with more difficulty, but I believed it would lead to a better understanding of TypeScript. Despite facing initial confusion and troubleshooting, I found that towards the end of the project, I became more comfortable and developed a better intuition for TypeScript, making this choice worthwhile.
 
 
 ## License
