@@ -53,6 +53,7 @@ button {
   margin: 0 auto;
   max-width: 600px;
   padding: 0 1rem;
+  min-height: 100vh;
 }
 
 .logo {
@@ -190,7 +191,7 @@ button {
 }
 
 .footerContainer {
-  position: absolute;
+  position: relative;
   bottom: 0;
   width: 100%;
   display: grid;
@@ -222,4 +223,18 @@ button {
 .links-container {
   display: flex;
   cursor: pointer;
+}
+
+@media (max-width:500px) {
+  .footerContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  .copyrightText {
+    justify-content: center;
+    margin-right: 0;
+  }
 }
